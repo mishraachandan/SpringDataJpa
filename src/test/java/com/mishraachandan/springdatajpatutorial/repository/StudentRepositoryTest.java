@@ -2,14 +2,12 @@ package com.mishraachandan.springdatajpatutorial.repository;
 
 import com.mishraachandan.springdatajpatutorial.entity.Guardian;
 import com.mishraachandan.springdatajpatutorial.entity.Student;
+import com.mishraachandan.springdatajpatutorial.util.TestDataGenerator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 //@DataJpaTest  // So standard way of doing it is through this. But here we are doing as we want to see the behaviour of our database.
@@ -17,6 +15,9 @@ class StudentRepositoryTest {
 
     @Autowired
     private StudentRepository studentRepository;
+
+    @Autowired
+    private TestDataGenerator testDataGenerator;
 
     @Test
     public void saveStudent(){
@@ -41,6 +42,14 @@ class StudentRepositoryTest {
     }
 
     @Test
+    public void addingDummyDataIntoTable(){
+        List<Student> studentList = testDataGenerator.generateStudents(50);
+        for(Student student : studentList){
+            studentRepository.save(student);
+        }
+    }
+
+    @Test
     public void getStudentByFirstAndLastName(){
         List<Student> studentList =  studentRepository.findByFirstNameAndLastName("uECo1U5GMl8", "n5xEFkE8y");
         studentList.stream()
@@ -55,8 +64,20 @@ class StudentRepositoryTest {
     }
 
     @Test
-    public void getStudentlastNameNotNull(){
+    public void getStudentLastNameNotNull(){
         List<Student> studentList =  studentRepository.findByLastNameNotNull();
         studentList.forEach(System.out::println);
     }
+
+    @Test
+    public void getStudentByGuardianName(){
+        List<Student> studentList = studentRepository.findByGuardianName("HCcMofIW4k");
+        studentList.stream().map(x -> x.getFirstName()).forEach(System.out::println);
+    }
+
+
+
+
+
+
 }
