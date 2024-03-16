@@ -34,7 +34,29 @@ class StudentRepositoryTest {
     @Test
     public void saveStudentWithGuardian(){
         Guardian guardian = Guardian.builder().email("d1ItRZL3R").name("HCcMofIW4k").mobileNbr("YjpRgybW2k").build();
-        Student student = Student.builder().firstName("uECo1U5GMl8").lastName("n5xEFkE8y").emailId("PowMbR1@gmail.com").guardian(guardian).build();
+        Student student = Student.builder().firstName("uECo1U5GMl8").lastName("n5xEFkE8y").emailId("PowMbR1@gmail.com").guardian
+                (guardian).build();
         studentRepository.save(student);
+
+    }
+
+    @Test
+    public void getStudentByFirstAndLastName(){
+        List<Student> studentList =  studentRepository.findByFirstNameAndLastName("uECo1U5GMl8", "n5xEFkE8y");
+        studentList.stream()
+                .map(x -> x.getLastName() + " " + x.getFirstName())
+                .forEach(System.out::println);
+    }
+
+    @Test
+    public void getStudentFirstNameContains(){
+        List<Student> studentList =  studentRepository.findByFirstNameContaining("u");
+        studentList.stream().map(x-> x.getFirstName() + " " + x.getLastName()).forEach(System.out::println);
+    }
+
+    @Test
+    public void getStudentlastNameNotNull(){
+        List<Student> studentList =  studentRepository.findByLastNameNotNull();
+        studentList.forEach(System.out::println);
     }
 }
