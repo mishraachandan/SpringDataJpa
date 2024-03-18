@@ -76,6 +76,38 @@ class StudentRepositoryTest {
     }
 
 
+    @Test
+    public void getStudentByEmailAddress(){
+        Student student = studentRepository.getStudentByEmailAddress("daniel.smith@yahoo.com");
+        System.out.println("Student :: " +student.toString());
+    }
+
+    @Test
+    public void deleteStudentByFirstName(){
+        List<Student> studentList = studentRepository.findByFirstNameContaining("chandan");
+        List<Long> listOfStudentIds = studentList.stream().map(Student::getStudentId).toList();
+        for(Long ids : listOfStudentIds){
+            studentRepository.deleteById(ids);
+        }
+    }
+
+    @Test
+    public void getStudentByNativeQuery(){
+        Student student = studentRepository.getStudentByNativeQuery("olivia.young@example.com");
+        System.out.println("Student :: " + student.toString());
+    }
+
+    @Test
+    public void getStudentByFirstNameNativeQuery(){
+        List<String> firstNameList = studentRepository.getStudentByFirstNameNative("Michael");
+        firstNameList.stream().forEach(System.out::println);
+    }
+
+
+    @Test
+    public void updateStudentNameByEmailId(){
+        int firstNameList = studentRepository.updateStudentNameByEmailId("JohnCena", "william.smith@hotmail.com");
+    }
 
 
 
