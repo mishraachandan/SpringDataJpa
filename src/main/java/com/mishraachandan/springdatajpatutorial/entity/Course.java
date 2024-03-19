@@ -43,24 +43,27 @@ public class Course {
     )
     private Teacher teacher;
 
-//    @ManyToMany(
-//            cascade = CascadeType.ALL
-//    )
-//    @JoinTable(
-//            name = "student_course_map",
-//            joinColumns = @JoinColumn(
-//                    name = "course_id",
-//                    referencedColumnName = "courseId"
-//            ),
-//            inverseJoinColumns = @JoinColumn(
-//                    name = "student_id",
-//                    referencedColumnName = "studentId"
-//            )
-//    )
-//    private List<Student> students;
-//
-//    public void addStudents(Student student){
-//        if(students == null) students = new ArrayList<>();
-//        students.add(student);
-//    }
+    @ManyToMany(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER
+    )
+    @JoinTable(
+            name = "student_course_map",
+            joinColumns = @JoinColumn(
+                    // this is the database that you are going to define.
+                    name = "course_id",
+                    // this would be the class property that you have already defined.
+                    referencedColumnName = "courseId"
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "student_id",
+                    referencedColumnName = "studentId"
+            )
+    )
+    private List<Student> students;
+
+    public void addStudents(Student student){
+        if(students == null) students = new ArrayList<>();
+        students.add(student);
+    }
 }

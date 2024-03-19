@@ -1,6 +1,8 @@
 package com.mishraachandan.springdatajpatutorial.repository;
 
 import com.mishraachandan.springdatajpatutorial.entity.Course;
+import com.mishraachandan.springdatajpatutorial.entity.Guardian;
+import com.mishraachandan.springdatajpatutorial.entity.Student;
 import com.mishraachandan.springdatajpatutorial.entity.Teacher;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -65,7 +68,31 @@ class CourseRepositoryTest {
         System.out.println(coursesByTitle);
         System.out.println(coursesByCreditDesc);
         System.out.println(coursesByTitleAndCreditDesc);
+    }
 
+    @Test
+    public void saveCourseWithStudentAndTeacher(){
+        Teacher teacher = Teacher.builder()
+                .firstName("Lizze")
+                .lastName("Morgan")
+                .build();
+
+        Student student = Student.builder()
+                .firstName("Abhishek")
+                .lastName("Singh")
+                .emailId("abhishek@gmail.com")
+                .build();
+
+        Course course = Course
+                .builder()
+                .title("AI")
+                .credit(12)
+                .teacher(teacher)
+                .build();
+
+        course.addStudents(student);
+
+        courseRepository.save(course);
     }
 
 
